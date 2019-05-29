@@ -1,0 +1,212 @@
+@import url(https://fonts.googleapis.com/css?family=Walter+Turncoat);
+h2 {
+    color: white;
+    font-family: "Walter Turncoat", cursive;
+    font:"Walter Turncoat", cursive;
+     }
+  
+
+.react-autosuggest__container 
+        {
+            position: relative;
+        }
+          
+ .react-autosuggest__input 
+        {
+            width:          100%;
+            height:         36px;
+            padding:        10px;
+            border:         1px solid $chefhero-light-green;
+            border-radius:  4px;
+            border-bottom-right-radius: 0;
+            border-top-right-radius: 0;
+        }
+          
+        .react-autosuggest__input--focused 
+        {
+            outline: none;
+        }
+          
+        .react-autosuggest__input--open 
+        {
+            border-bottom-left-radius:  0;
+            border-bottom-right-radius: 0;
+            
+        }
+          
+        .react-autosuggest__suggestions-container
+        {
+            display: none;
+        }
+          
+        .react-autosuggest__suggestions-container--open 
+        {
+            display:            block;
+            position:           absolute;
+            top:                33px;
+            width:              100%;
+            min-width:          160px;
+            margin-left:        1px;
+            background-color: rgb(251, 251, 251);
+            border-radius:      0 0 4px 4px;
+            z-index:            2;
+            box-shadow:         0 6px 12px rgba(0, 0, 0, 0.175);
+            background-clip:    padding-box;
+                        
+        }
+          
+        .react-autosuggest__suggestions-list 
+        {
+            margin:             1;
+            padding:            0;
+            list-style-type:    none;
+            
+        }
+        
+        .react-autosuggest__suggestion 
+        {
+            cursor:     pointer;
+            padding:    10px 20px;
+            column-rule-color: red;
+            
+            
+        }
+        
+        .react-autosuggest__suggestion--highlighted 
+        {
+            background-color: red
+        }
+
+        *, *:before, *:after {
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            font-size: 16px;
+            line-height: 1.5rem;
+            height: 100%;
+            min-height: 100%;
+        }
+     
+        .header {
+            padding: 1rem;
+            background: rgb(255, 38, 0);
+            height: 8rem;
+            color: #fff;
+            z-index: -1;
+        }
+     
+        .sidebar {
+            padding: 1rem;
+            background: #2980B9;
+            width: 20rem;
+            color: #fff;
+        }
+     
+        .content {
+            padding: 1rem;
+            background: #ECF0F1;
+            scroll-behavior: smooth;
+            
+        }
+
+        .popup {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            background-color:white;
+            z-index: 500;
+          }
+          .popup_inner {
+            position: absolute;
+            left: 25%;
+            right: 25%;
+            top: 25%;
+            bottom: 25%;
+            margin: auto;
+            background:white;
+            z-index: 500;
+          }
+          .ReactModal__Body--open {
+            overflow-y: hidden;
+          }
+
+
+          input[type=text], .txtarea{
+            margin-left: 10px;
+            
+             }
+
+
+             /* Add a black background color to the top navigation */
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Right-aligned section inside the top navigation */
+.topnav-right {
+  float: right;
+}
+
+nav {
+    background: black;  
+    border-radius: 6px !important;
+    -moz-border-radius: 6px !important;
+    
+    
+       }
+.nav a{
+   color: whitesmoke !important;
+   font-size: 1.5em !important;
+   font-family: "Walter Turncoat", cursive;
+   background:black;
+   }
+.nav li{
+   padding-right:5px;
+   color:coral;
+
+   
+  }
+
+  ul.nav a:hover { background:chocolate !important; }
+
+ h2 {
+color: white;
+font-family: "Walter Turncoat", cursive;
+font:"Walter Turncoat", cursive;
+ }
+
+
+ .custom-toggler.navbar-toggler {
+    border-color: rgb(255,102,203);
+}
