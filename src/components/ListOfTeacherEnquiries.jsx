@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import TeacherEnquiry from './TeacherEnquiry'
 import InfiniteScroll from 'react-infinite-scroller';
+import {connect} from 'react-redux';
+
 
 class ListOfTeacherEnquiries extends Component
 {
@@ -96,9 +98,11 @@ if(this.state.pageNumber===1) {
                    freeTextRequirement:'I need best possible coaching for subject and also to help me complete my assignments'    
                  }
         ]
-        this.setState({teachers:theData}, () => {console.log(this.state.teachers)})
+        this.setState({teachers:this.props.posts}, () => {console.log(this.state.teachers)})
 
-        this.setState({teacherComponentArray: theData.map(teacher => <TeacherEnquiry key={teacher.name} photo={teacher.photo} name={teacher.name} subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} freeTextRequirement={teacher.freeTextRequirement} ></TeacherEnquiry>)
+        //this.setState({teacherComponentArray: theData.map(teacher => <TeacherEnquiry key={teacher.name} photo={teacher.photo} name={teacher.name} subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} freeTextRequirement={teacher.freeTextRequirement} ></TeacherEnquiry>)
+        this.setState({teacherComponentArray: this.props.posts.map(teacher => <TeacherEnquiry key={teacher.name} photo={teacher.photo} name={teacher.name} subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} freeTextRequirement={teacher.freeTextRequirement} ></TeacherEnquiry>)
+    
     })
 
 
@@ -128,7 +132,10 @@ else if(this.state.pageNumber>1) {
         }]
     
         this.setState({teacherComponentArray: this.state.teacherComponentArray.concat (
-            newArray.//filter(teacherCandidate => teacherCandidate.subjects.includes(this.props.customFilter)).
+           // newArray.//filter(teacherCandidate => teacherCandidate.subjects.includes(this.props.customFilter)).
+           //replace this with newArray to undo
+           this.props.posts.
+           
             map(teacher => <TeacherEnquiry key={teacher.name} photo={teacher.photo} name={teacher.name} 
                subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} freeTextRequirement={teacher.freeTextRequirement}>
                   </TeacherEnquiry>)
@@ -184,4 +191,11 @@ else if(this.state.pageNumber>1) {
 
 }
 
-export default ListOfTeacherEnquiries
+//export default ListOfTeacherEnquiries
+
+const mapStateToProps = (state) => {
+    return {
+        posts: state
+    }
+}
+export default connect(mapStateToProps)(ListOfTeacherEnquiries);

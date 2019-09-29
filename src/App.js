@@ -16,6 +16,14 @@ import {NavLink as RRNavLink}  from 'react-router-dom'
 import {Route,Switch, BrowserRouter as Router} from 'react-router-dom';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
 import TeacherEnquiriesMainPage from './components/TeacherEnquiriesMainPage'
+import RecordedCoursesMainPage from './components/RecordedCoursesMainPage';
+import AskForBatchFromInvoker from './components/AskForBatchFormInvoker';
+import { reduxForm, Field } from 'redux-form';
+import {Provider} from 'react-redux';
+import { createStore } from 'redux'
+import reducer1 from './components/reducers' 
+
+const store = createStore(reducer1)
 
 class App extends Component {
 
@@ -30,7 +38,6 @@ class App extends Component {
       this.updateViewState = this.updateViewState.bind(this);
       this.toggleSideBar = this.toggleSideBar.bind(this);
       this.toggleNavbar = this.toggleNavbar.bind(this);
-
   }
 
   updateViewState() {
@@ -77,9 +84,13 @@ componentWillMount() {
   }
 
  
+
+
   render() {
  
   return (
+    <Provider store={store}>
+
     <div className="App">
          {/*<TeacherComponent></TeacherComponent>
         <Layout type="column">
@@ -138,15 +149,17 @@ componentWillMount() {
               </NavItem>
               
               <NavItem>
-                <NavLink href="/LookUpTeacherEnquiries/">View Student Enquiries</NavLink>
+                <NavLink href="/LookUpTeacherEnquiries/">See what Students want</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/components/">Add a new Job</NavLink>
+                <NavLink href="/AskForBatchForm/">Ask for a Batch</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="/components/">Edit My Profile</NavLink>
               </NavItem>
- 
+              <NavItem>
+                <NavLink href="/LookUpRecordedCourses/">Recorded Courses</NavLink>
+              </NavItem>
 
             </Nav>
           </Collapse>
@@ -164,6 +177,8 @@ componentWillMount() {
                 <Route  path="/" exact component={Example}  />
                 <Route  path="/LookUpTeachers" component={Example}  />
                 <Route  path="/LookUpTeacherEnquiries" component={TeacherEnquiriesMainPage}  />
+                <Route  path="/LookUpRecordedCourses" component={RecordedCoursesMainPage}  />
+                <Route path="/AskForBatchForm" component={AskForBatchFromInvoker} />
                 <Route  component={ErrorComponent}  />
                 </Switch>
                 </>
@@ -198,6 +213,7 @@ componentWillMount() {
 
        
        </div>
+       </Provider>
   );
   }
 }

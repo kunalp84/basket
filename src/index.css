@@ -17,6 +17,29 @@ h2 {
   font:"Walter Turncoat", cursive;
    }
 
+   table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 25px;
+    border-spacing: 5px;
+    align-content: center
+    
+
+  }
+
+  td.batchform { 
+    width:150px; 
+    text-align:center; 
+    border:1px solid black; 
+    padding:5px 
+  
+} 
+ 
+  table.center {
+    margin-left:auto; 
+    margin-right:auto;
+  }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -38,3 +61,28 @@ code {
   padding: 10px 20px;
 }
 
+
+.TFtable{
+  width:70%; 
+  border-collapse:collapse; 
+}
+.TFtable td{ 
+  padding:7px; border:#4e95f4 1px solid;
+}
+/* provide some minimal visual accomodation for IE8 and below */
+.TFtable tr{
+  background: #b8d1f3;
+}
+/*  Define the background color for all the ODD background rows  */
+.TFtable tr:nth-child(odd){ 
+  background: #b8d1f3;
+}
+/*  Define the background color for all the EVEN background rows  */
+.TFtable tr:nth-child(even){
+  background: #dae5f4;
+}
+
+.scrollable {
+  height: 400px;
+  overflow-y: scroll;
+}

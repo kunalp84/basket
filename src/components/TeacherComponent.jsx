@@ -37,7 +37,7 @@ class TeacherComponent extends Component
 
     componentDidMount() {
         console.log('componentDidMount - Single Teacher')
-        this.refreshSingleTeacher(); /** Get the data and put it in a state*/
+        this.refreshSingleTeacher(); /** Get the data from props and put it in a state*/
         console.log(this.state)
     }
 
