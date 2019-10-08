@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import TeacherEnquiry from './TeacherEnquiry'
-import InfiniteScroll from 'react-infinite-scroller';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import ReduxLazyScroll from 'redux-lazy-scroll'
 
 
 class ListOfTeacherEnquiries extends Component
@@ -9,27 +10,37 @@ class ListOfTeacherEnquiries extends Component
     constructor(props)
     {
         super(props)
-        this.state = {
-            teachers: [],
-            message: null,
-            noOfElements:0,
-            //hasMore:true,
-            pageNumber:1,
-            totalPages:5,
-            totalRecords:50,
-            teacherComponentArray:[]
-           
-           
-           
+        
 
-        }
+        console.log("inside constructi" + this.state)
+
 
         this.refreshTeacherData = this.refreshTeacherData.bind(this)
-       
+        this.componentDidMount = this.componentDidMount.bind(this)
+        this._loadMore = this._loadMore.bind(this)
+        this.setRootRef = this.setRootRef.bind(this);
+
+
     }
 
-   
+    componentDidMount() {
+      console.log('componentDidMount - Single Teacher')
 
+      this.props.dispatch({
+        type:'LOAD_ENQUIRY',
+        data:[] 
+    })
+    //window.addEventListener('scroll', this._loadMore, false);
+
+      //console.log(this.state)
+      console.log("end of did mount")
+  }
+
+   
+  _loadMore() {
+   console.log("Load More function called") 
+    this.props.dispatch(  {type:"LOAD_MORE" , data: this.props.pageToBeFetched} )
+  }
     
     hasMoreElements(){
         if(this.state.noOfElements<6)
@@ -38,6 +49,10 @@ class ListOfTeacherEnquiries extends Component
             return true;
         }
         return false;
+    }
+
+    setRootRef(element) {
+      this.rootRef = element;
     }
 
 
@@ -98,12 +113,12 @@ if(this.state.pageNumber===1) {
                    freeTextRequirement:'I need best possible coaching for subject and also to help me complete my assignments'    
                  }
         ]
-        this.setState({teachers:this.props.posts}, () => {console.log(this.state.teachers)})
+       // this.setState({teachers:this.props.posts}, () => {console.log(this.state.teachers)})
 
         //this.setState({teacherComponentArray: theData.map(teacher => <TeacherEnquiry key={teacher.name} photo={teacher.photo} name={teacher.name} subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} freeTextRequirement={teacher.freeTextRequirement} ></TeacherEnquiry>)
-        this.setState({teacherComponentArray: this.props.posts.map(teacher => <TeacherEnquiry key={teacher.name} photo={teacher.photo} name={teacher.name} subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} freeTextRequirement={teacher.freeTextRequirement} ></TeacherEnquiry>)
+      //  this.setState({teacherComponentArray: this.props.teacherEnquiries.map(teacher => <TeacherEnquiry subjects={teacher.subject}  freeTextRequirement={teacher.freeTextRequirement} ></TeacherEnquiry>)
     
-    })
+   // })
 
 
 console.log('*****1  '+this.state.pageNumber)
@@ -131,15 +146,15 @@ else if(this.state.pageNumber>1) {
            freeTextRequirement:'I need best possible coaching for subject and also to help me complete my assignments'    
         }]
     
-        this.setState({teacherComponentArray: this.state.teacherComponentArray.concat (
+       // this.setState({teacherComponentArray: 
            // newArray.//filter(teacherCandidate => teacherCandidate.subjects.includes(this.props.customFilter)).
-           //replace this with newArray to undo
-           this.props.posts.
+           //replace this with newArray to undo this.state.teacherComponentArray.concat (
+         //  this.props.teacherEnquiries.
            
-            map(teacher => <TeacherEnquiry key={teacher.name} photo={teacher.photo} name={teacher.name} 
-               subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} freeTextRequirement={teacher.freeTextRequirement}>
-                  </TeacherEnquiry>)
-        )})
+           // map(teacher => <TeacherEnquiry key={teacher.name} photo={teacher.photo} name={teacher.name} 
+             //  subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} freeTextRequirement={teacher.freeTextRequirement}>
+               //   </TeacherEnquiry>)
+       // })
     
     
         
@@ -149,9 +164,9 @@ else if(this.state.pageNumber>1) {
  console.log("Refresh data called -pre inc"+this.state.pageNumber)
 
        // this.setState({noOfElements:5})  
-        this.setState((prevState) => ({
-            pageNumber: prevState.pageNumber + 1
-        }));
+     //   this.setState((prevState) => ({
+       //     pageNumber: prevState.pageNumber + 1
+        //}));
     
         console.log("Refresh data called -out "+this.state.pageNumber)
 
@@ -163,26 +178,35 @@ else if(this.state.pageNumber>1) {
         console.log('Filter from Example auto suggest'+this.props.customFilter)
 
     return (
-   <div style={{height:'500px', overflow:'auto'}}>
-    <InfiniteScroll
-         pageStart={0}
-         loadMore={this.refreshTeacherData}
-         hasMore={this.state.pageNumber<=500}
-         loader={<div className="loader" key={0}>Loading ...</div>}
-         useWindow={false}
-         getScrollParent={() => this.scrollParentRef}
-         >
+      <div style={{height:'900px', overflow:'auto'}} >
+
+  
+  <ReduxLazyScroll
+         // isFetching={false}
+         // errorMessage={"Error"}
+          loadMore={this._loadMore}
+         hasMore={this.props.pageToBeFetched<100}
+         isParentScrollable={true}
+        >
     {
-        this.state.teacherComponentArray
-     /*    this.state.teachers.filter(teacherCandidate => teacherCandidate.subjects.includes(this.props.customFilter)).
+      this.props.teacherEnquiries.map(teacher => <TeacherEnquiry key={Math.random()} subjects={teacher.subjects}  freeTextRequirement={teacher.freeTextRequirement} ></TeacherEnquiry>)
+      //this.props.teacherEnquiries.map(teacher => <TeacherEnquiry key={Math.random()} subjects={teacher.subjects}  freeTextRequirement={teacher.freeTextRequirement} ></TeacherEnquiry>)
+      /*    this.state.teachers.filter(teacherCandidate => teacherCandidate.subjects.includes(this.props.customFilter)).
          map(teacher => <TeacherComponent key={teacher.name} photo={teacher.photo} name={teacher.name} 
             subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} >
-               </TeacherComponent>)*/
+               </TeacherComponent>)
+               
+                <InfiniteScroll
+      items={this.props.teacherEnquiries.map(teacher => <TeacherEnquiry key={Math.random()} subjects={teacher.subjects}  freeTextRequirement={teacher.freeTextRequirement} ></TeacherEnquiry>)} 
+     loadMore={this._loadMore.bind(this)} 
+      hasMore={true}
+    />*/
     }
-
+      
+    </ReduxLazyScroll>
+  </div>
     
-    </InfiniteScroll>
-    </div>
+  
     )
            
 }  
@@ -193,9 +217,16 @@ else if(this.state.pageNumber>1) {
 
 //export default ListOfTeacherEnquiries
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state,ownProps) => {
+  console.log("$$$ state  "+state)  
+  console.log(state)
+  console.log("OwnProps"+ownProps)
+    console.log("i222nside mapStateToProps - list of teacher enquiries" + state.teacherEnquiryReducer.teacherEnquiries)
+
     return {
-        posts: state
+        teacherEnquiries: state.teacherEnquiryReducer.teacherEnquiries || [{subject:'', freeTextRequirement:'', id:''}],
+        pageToBeFetched: state.teacherEnquiryReducer.pageToBeFetched || 0
     }
-}
+
+} 
 export default connect(mapStateToProps)(ListOfTeacherEnquiries);

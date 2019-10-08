@@ -146,7 +146,7 @@ else if(this.state.pageNumber>1) {
         console.log('Filter from Example auto suggest'+this.props.customFilter)
 
     return (
-   <div style={{height:'500px', overflow:'auto'}}>
+   <div style={{height:'900px', overflow:'auto'}}>
     <InfiniteScroll
          pageStart={0}
          loadMore={this.refreshTeacherData}

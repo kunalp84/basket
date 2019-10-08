@@ -21,9 +21,23 @@ import AskForBatchFromInvoker from './components/AskForBatchFormInvoker';
 import { reduxForm, Field } from 'redux-form';
 import {Provider} from 'react-redux';
 import { createStore } from 'redux'
-import reducer1 from './components/reducers' 
+import combineReducers from './components/reducers' 
+import StudentProfileFormInvoker from './components/StudentProfileFormInvoker';
+import LoginComponentInvoker from './components/LoginComponentInvoker';
+import AuthenticatedRoute from './components/AuthenticatedRoute'
 
-const store = createStore(reducer1)
+const store = createStore(combineReducers,{
+  teachers: [],
+  teacherEnquiries: [],
+  message: null,
+  noOfElements:0,
+  //hasMore:true,
+  pageNumber:1,
+  totalPages:5,
+  totalRecords:50,
+  teacherComponentArray:[]
+ 
+})
 
 class App extends Component {
 
@@ -155,11 +169,12 @@ componentWillMount() {
                 <NavLink href="/AskForBatchForm/">Ask for a Batch</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/components/">Edit My Profile</NavLink>
+                <NavLink href="/StudentProfile/">Edit My Profile</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="/LookUpRecordedCourses/">Recorded Courses</NavLink>
               </NavItem>
+             
 
             </Nav>
           </Collapse>
@@ -178,7 +193,9 @@ componentWillMount() {
                 <Route  path="/LookUpTeachers" component={Example}  />
                 <Route  path="/LookUpTeacherEnquiries" component={TeacherEnquiriesMainPage}  />
                 <Route  path="/LookUpRecordedCourses" component={RecordedCoursesMainPage}  />
-                <Route path="/AskForBatchForm" component={AskForBatchFromInvoker} />
+                <AuthenticatedRoute path="/AskForBatchForm" component={AskForBatchFromInvoker} />
+                <Route path="/StudentProfile" component={StudentProfileFormInvoker}/>
+                <Route path="/Login" component={LoginComponentInvoker}/>
                 <Route  component={ErrorComponent}  />
                 </Switch>
                 </>

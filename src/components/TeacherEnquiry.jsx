@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Popup from "reactjs-popup";
 import StudentContactPopUp from './StudentContactPopUp';
+import {connect} from 'react-redux';
 
 
 
@@ -15,35 +16,34 @@ class TeacherEnquiry extends Component
     constructor(props)
     {
         super(props)
-        this.state ={ name: '',
-        subjects: '',
-        category: '',
-        fans: '',
-        photo:'',
-        showPopup:false
-         
-    }    
+       
         this.refreshSingleTeacher = this.refreshSingleTeacher.bind(this)
         this.togglePopup = this.togglePopup.bind(this)
 
     }
 
     togglePopup() {
-        this.setState({
-          showPopup: !this.state.showPopup
-        });
+       // this.setState({
+         // showPopup: !this.state.showPopup
+        //});
+
+
+        this.props.dispatch({
+          type:'TOGGLE_POPUP',
+          data:!this.props.showPopup
+      })
       }
   
 
     componentDidMount() {
         console.log('componentDidMount - Single Teacher')
-        this.refreshSingleTeacher(); /** Get the data and put it in a state*/
-        console.log(this.state)
+       // this.refreshSingleTeacher(); /** Get the data and put it in a state*/
+       // console.log(this.state)
     }
 
     refreshSingleTeacher()
     {
-        this.setState({name:this.props.name},() => {console.log(this.state.name)})
+    //    this.setState({name:this.props.name},() => {console.log(this.state.name)})
     }
 
 
@@ -71,7 +71,7 @@ class TeacherEnquiry extends Component
               <div className='text-left'>
               <Button variant="primary" className='btn-info' onClick={this.togglePopup.bind(this)}> Contact Student</Button> {' '}
              
-              {this.state.showPopup ? 
+              {this.props.showPopup ? 
             <StudentContactPopUp
               text='Student Details'
               closePopup={this.togglePopup.bind(this)} 
@@ -103,4 +103,12 @@ class TeacherEnquiry extends Component
   }
 }
 
-export default TeacherEnquiry
+const mapStateToProps = (state) => {
+  console.log("inside mapStateToProps of enquiry" + state.showPopup)
+
+  return {
+    showPopup: state.teacherEnquiryReducer.showPopup || false 
+  }
+
+  }
+    export default connect(mapStateToProps)(TeacherEnquiry);

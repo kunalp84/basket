@@ -1,12 +1,7 @@
 
 
 const defaultState = {
-    teacherEnquiries: [{
-        subject:'',
-        category:'',
-        freeTextRequirement:'',
-        showPopup:false
-    }]
+    teacherList: []
   }
 
 
