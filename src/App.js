@@ -194,7 +194,9 @@ componentWillMount() {
                 <Route  path="/LookUpTeacherEnquiries" component={TeacherEnquiriesMainPage}  />
                 <Route  path="/LookUpRecordedCourses" component={RecordedCoursesMainPage}  />
                 <AuthenticatedRoute path="/AskForBatchForm" component={AskForBatchFromInvoker} />
-                <Route path="/StudentProfile" component={StudentProfileFormInvoker}/>
+                <AuthenticatedRoute path="/StudentProfile" component={StudentProfileFormInvoker}/>
+                <Route path="/StudentProfileRegistration" component={StudentProfileFormInvoker}/>
+
                 <Route path="/Login" component={LoginComponentInvoker}/>
                 <Route  component={ErrorComponent}  />
                 </Switch>

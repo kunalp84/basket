@@ -24,7 +24,7 @@ switch(action.type)
    }; //state.concat([action.data])
 
    case 'LOAD_ENQUIRY':
-       console.log("&&&&&&&Inside the swtich case LOAD enquiriws")
+       console.log("&&&&&&&Inside the swtich case LOAD enquiriws TEACHER ENQUIRY LOAD ENQUIRY")
           return  {
                     ...state,
                     teacherEnquiries:state.teacherEnquiries.concat([
@@ -84,7 +84,7 @@ switch(action.type)
 
                 }
             case 'LOAD_MORE':
-                console.log("you are scrolling......"+action.data)
+                console.log("TEACHER ENQUIRY LOAD_MORE you are scrolling......"+action.data)
                 return {
                     ...state,
                     pageToBeFetched:action.data+1,

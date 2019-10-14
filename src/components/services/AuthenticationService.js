@@ -21,5 +21,10 @@ class AuthenticationService {
         return true
     }
 
+    getUser()
+    {
+        return sessionStorage.getItem("userId")
+    }
+
 }
 export default new AuthenticationService

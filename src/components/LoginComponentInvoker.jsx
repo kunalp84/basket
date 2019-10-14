@@ -42,7 +42,7 @@ class LoginComponentInvoker extends React.Component {
     if (AuthenticationService.isUserLoggerIn())
     return <Redirect to="/" />;
 
-    return <LoginComponent handleSubmit={this.submit} />
+    return <LoginComponent  key={this.props.isLoginSuccess}  handleSubmit={this.submit} isLoginSuccess={this.props.isLoginSuccess}/>
     
   }
 }
@@ -57,7 +57,7 @@ const mapStateToProps = (state,ownProps) => {
   
 
     return {
-      isLoginSuccess: state.loginDataReducer.isLoginSuccess|| false
+      isLoginSuccess: state.loginDataReducer.isLoginSuccess
     }
 
 } 

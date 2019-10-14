@@ -7,6 +7,9 @@ import Button from 'react-bootstrap/Button'
 import Popup from "reactjs-popup";
 import StudentContactPopUp from './StudentContactPopUp';
 import {connect} from 'react-redux';
+import AuthenticationService from './services/AuthenticationService';
+import {Redirect} from 'react-router-dom';
+
 
 
 
@@ -70,8 +73,17 @@ class TeacherEnquiry extends Component
               <p className="card-text" style={{  textAlign:'left'  }}  > I need Coaching For : {this.props.freeTextRequirement} </p>
               <div className='text-left'>
               <Button variant="primary" className='btn-info' onClick={this.togglePopup.bind(this)}> Contact Student</Button> {' '}
+
+              
+
              
-              {this.props.showPopup ? 
+             
+              {
+             
+                
+                
+                
+                this.props.showPopup ? 
             <StudentContactPopUp
               text='Student Details'
               closePopup={this.togglePopup.bind(this)} 

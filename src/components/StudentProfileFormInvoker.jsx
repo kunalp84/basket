@@ -8,7 +8,7 @@ class StudentProfileFormInvoker extends React.Component {
     event.preventDefault();
 
     // print the form values to the console
-    console.log("Student"+event.target.subject.value)
+    console.log("Student********"+event.target.subject.value)
     const studentdata =[{
         name:event.target.name.value,
         password:event.target.password.value,

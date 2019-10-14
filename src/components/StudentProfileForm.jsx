@@ -6,6 +6,7 @@ import ReactTable from 'react-table'
 
 // redux imports
 import { Field, reduxForm } from 'redux-form'
+import AuthenticationService from './services/AuthenticationService';
 
 
 
@@ -120,6 +121,7 @@ Your Profile
 
 <form onSubmit={this.props.handleSubmit}>
   <table className='center'>
+    <tbody>
       <tr>
         <td className='batchform'><label htmlFor="Name" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Name</label>
         </td>
@@ -129,10 +131,11 @@ Your Profile
       </tr>
 
       <tr>
-        <td className='batchform'><label htmlFor="Email ID (this will be your default user name)" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Email ID</label>
+        <td className='batchform'><label htmlFor="Email ID (this will be your default user name)" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}  >Email ID</label>
         </td>
         <td className='batchform'>
-        <Field name="emailId" component="input" type="text" className="col-sm-10" style={{width:'350px'}}/>
+    {   !AuthenticationService.isUserLoggerIn() &&  <Field name="emailId" component="input" type="text" className="col-sm-10" style={{width:'350px'}} /> }
+    {   AuthenticationService.isUserLoggerIn() &&  AuthenticationService.getUser() }
         </td>
       </tr>
 
@@ -181,6 +184,7 @@ Your Profile
         <Field name="freeTextRequirement" component="textarea" className="col-sm-10" style={{width:'350px'}} />
       </td>
       </tr>
+      </tbody>
       </table>
 
       <br>

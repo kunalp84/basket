@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import TeacherComponent from './TeacherComponent'
 import InfiniteScroll from 'react-infinite-scroller';
+import PropTypes from 'prop-types';
+import ReduxLazyScroll from 'redux-lazy-scroll'
+import {connect} from 'react-redux';
+
 
 class ListOfTeachersComponent extends Component
 {
@@ -23,9 +27,29 @@ class ListOfTeachersComponent extends Component
         }
 
         this.refreshTeacherData = this.refreshTeacherData.bind(this)
+        this.componentDidMount = this.componentDidMount.bind(this)
+        this._loadMore = this._loadMore.bind(this)
        
     }
 
+    componentDidMount() {
+        console.log('componentDidMount - Single Teacher')
+  
+        this.props.dispatch({
+          type:'LOAD_TEACHERS',
+          data:[] 
+      })
+      //window.addEventListener('scroll', this._loadMore, false);
+  
+        //console.log(this.state)
+        console.log("end of did mount")
+    }
+  
+     
+    _loadMore() {
+     console.log("Load More function called") 
+      this.props.dispatch(  {type:"LOAD_MORE_TEACHERS" , data: this.props.teacherPageToBeFetched} )
+    }
    
 
     
@@ -90,7 +114,7 @@ if(this.state.pageNumber===1) {
         ]
         this.setState({teachers:theData}, () => {console.log(this.state.teachers)})
 
-        this.setState({teacherComponentArray: theData.map(teacher => <TeacherComponent key={teacher.name} photo={teacher.photo} name={teacher.name} subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} ></TeacherComponent>)
+        this.setState({teacherComponentArray: theData.map(teacher => <TeacherComponent key={Math.random()} photo={teacher.photo} name={teacher.name} subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} ></TeacherComponent>)
     })
 
 
@@ -147,24 +171,27 @@ else if(this.state.pageNumber>1) {
 
     return (
    <div style={{height:'900px', overflow:'auto'}}>
-    <InfiniteScroll
-         pageStart={0}
-         loadMore={this.refreshTeacherData}
-         hasMore={this.state.pageNumber<=500}
-         loader={<div className="loader" key={0}>Loading ...</div>}
-         useWindow={false}
-         getScrollParent={() => this.scrollParentRef}
-         >
+  <ReduxLazyScroll
+         // isFetching={false}
+         // errorMessage={"Error"}
+          loadMore={this._loadMore}
+         hasMore={this.props.teacherPageToBeFetched<100}
+         isParentScrollable={true}
+        >
+    
     {
-        this.state.teacherComponentArray
-     /*    this.state.teachers.filter(teacherCandidate => teacherCandidate.subjects.includes(this.props.customFilter)).
+//        this.state.teacherComponentArray
+        this.props.teacherList.map(teacher => <TeacherComponent key={Math.random()} photo={teacher.photo} name={teacher.name} subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} ></TeacherComponent>)
+
+
+        /*    this.state.teachers.filter(teacherCandidate => teacherCandidate.subjects.includes(this.props.customFilter)).
          map(teacher => <TeacherComponent key={teacher.name} photo={teacher.photo} name={teacher.name} 
             subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} >
                </TeacherComponent>)*/
     }
 
     
-    </InfiniteScroll>
+    </ReduxLazyScroll>
     </div>
     )
            
@@ -174,4 +201,20 @@ else if(this.state.pageNumber>1) {
 
 }
 
-export default ListOfTeachersComponent
+
+//export default ListOfTeacherEnquiries
+
+const mapStateToProps = (state,ownProps) => {
+    console.log("$$$ state  "+state)  
+    console.log(state)
+    console.log("OwnProps"+ownProps)
+      console.log("i222nside mapStateToProps - list of teacher components" + state.teacherListReducer.teacherList)
+  
+      return {
+          teacherList: state.teacherListReducer.teacherList || [{subject:'', freeTextRequirement:'', id:''}],
+          teacherPageToBeFetched: state.teacherListReducer.teacherPageToBeFetched || 0
+      }
+  
+  } 
+  export default connect(mapStateToProps)(ListOfTeachersComponent);
+

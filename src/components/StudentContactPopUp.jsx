@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button' 
 import ReactTable from 'react-table'
 import Form from 'react-bootstrap/Form'
+import AuthenticationService from './services/AuthenticationService';
 
+import {Redirect} from 'react-router-dom';
 
 
 // Example Data
@@ -21,9 +23,17 @@ const theData =
     }
 
 
+    
+   
 
 class StudentContactPopUp extends React.Component {
     render() {
+      if(!AuthenticationService.isUserLoggerIn() )
+      {
+     return  <Redirect to="/Login"/>
+      }
+
+
       return (       <div className='popup' style={{width:'50%'  } } > 
       <div  >
 

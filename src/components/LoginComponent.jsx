@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+
+import {Redirect} from 'react-router-dom';
+
 
 class LoginComponent extends React.Component {
 
@@ -8,11 +13,17 @@ class LoginComponent extends React.Component {
     constructor(props)
     {
         super(props)
-        
+        console.log("props Login in LoginComponent "+this.props.isLoginSuccess)
         console.log("inside login Component " + this.state)
+
     }
 
-
+    onClick = () =>  {
+      console.log("clicked")//this.context.history.push("/StudentProfile")
+     // return <Redirect to="/StudentProfile"/>
+      
+    
+    }
     
 
 
@@ -60,7 +71,15 @@ class LoginComponent extends React.Component {
   
         
   
-             { /*<Form >
+             { 
+                this.props.isLoginSuccess==false &&               <span className="label label-pill label-danger">Login Failed Please Try Again</span>   
+              
+
+                
+                
+
+               
+               /*<Form >
     
   
       
@@ -97,6 +116,9 @@ class LoginComponent extends React.Component {
     </Button> 
   
   </Form>   */}
+
+<br>
+                </br>     
   
   <form onSubmit={this.props.handleSubmit}>
     <table className='center'>
@@ -125,8 +147,12 @@ class LoginComponent extends React.Component {
         <br>
         </br>
         <button type="submit">Submit</button>
-        <button type="button">Register</button>
+       
+        <Link to="/StudentProfileRegistration" className="btn btn-primary">Register Here </Link>
+
       </form>
+
+
   
   </div>
         </div>
@@ -138,7 +164,7 @@ class LoginComponent extends React.Component {
   
   
   
-  
+
   
   
   
@@ -163,6 +189,7 @@ class LoginComponent extends React.Component {
 LoginComponent = reduxForm({
     form: 'logincomponent' // a unique name for this form
   })(LoginComponent);
+  
   
   
   //export default AskForBatchForm
