@@ -59,17 +59,21 @@ class TeacherEnquiriesMainPage extends React.Component {
   }
 
   onChange = (event, { newValue }) => {
+ 
     this.setState({
       value: newValue
-    });
+    }); 
+  
   };
 
   // Autosuggest will call this function every time you need to update suggestions.
   // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested = ({ value }) => {
+    if(value.length>3) {
     this.setState({
       suggestions: getSuggestions(value)
     });
+  }
   };
 
   // Autosuggest will call this function every time you need to clear suggestions.

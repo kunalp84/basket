@@ -1,33 +1,52 @@
 
 
+
 const defaultState = {
     teacherEnquiries: [{
-        subject:'',
+      /*  subjectName:'',
         category:'',
-        freeTextRequirement:'',
-        showPopup:false
+        requirement:'',
+        showPopup:false,
+        userName:'',
+        respMessage:''*/
     }]
   }
 
 
 const teacherEnquiryReducer = (state =defaultState, action) => {
+
 console.log("this reducer called"+action.type)
 console.log(state.teacherEnquiries)
 console.log(action.data)
 switch(action.type)
 {
-    case 'ADD_ENQUIRY':
-        console.log("Action dispatched "+action.data[0].category)
+    case 'ADD_ENQUIRY_FOR_BATCH':
+      //  console.log("Action dispatched "+action.data[0].category)
+        var responseMessage="NATTTT"
+       // console.log("JSON message  "+JSON.stringify(action.data[0]))
+       // const dataSent={ batchrequest:JSON.stringify(action.data[0]) };
+         
+         
+
+
+        
+        responseMessage = "OK"
+        console.log("HERE ######################"+responseMessage)
     return {
        ...state,
-       teacherEnquiries:state.teacherEnquiries.concat([action.data])
+  //     teacherEnquiries:state.teacherEnquiries.concat([action.data]),
+       responseMessage:responseMessage
    }; //state.concat([action.data])
+
+
 
    case 'LOAD_ENQUIRY':
        console.log("&&&&&&&Inside the swtich case LOAD enquiriws TEACHER ENQUIRY LOAD ENQUIRY")
           return  {
-                    ...state,
-                    teacherEnquiries:state.teacherEnquiries.concat([
+                 //   ...state,
+                    teacherEnquiries:state.teacherEnquiries.concat(
+                        action.data
+                        /*[
                         {
                            name: 'Student.Yogesh',
                            subjects: 'Microprocessor 8086 ',
@@ -72,9 +91,11 @@ switch(action.type)
                            freeTextRequirement:'I need best possible coaching for subject and also to help me complete my assignments'    
                          }
                          
-                ]),
+                ]*/),
                 showPopup:false,
-                pageToBeFetched:0
+                pageToBeFetched:0,
+                size:10,
+                start:10
 
             }
             case 'TOGGLE_POPUP':
@@ -85,10 +106,15 @@ switch(action.type)
                 }
             case 'LOAD_MORE':
                 console.log("TEACHER ENQUIRY LOAD_MORE you are scrolling......"+action.data)
+                console.log(action.data)
                 return {
                     ...state,
-                    pageToBeFetched:action.data+1,
-                    teacherEnquiries:state.teacherEnquiries.concat([
+                    pageToBeFetched:action.data.pageToBeFetched+1,
+                    size:action.data.size,
+                    start:Number(action.data.start)+Number(action.data.size),
+                    teacherEnquiries:state.teacherEnquiries.concat(
+                        action.data.nextElements
+                        /*[
                         {
                            name: 'Student.Yogesh Thi one is more',
                            subjects: 'Microprocessor 8086 - more pipeline',
@@ -96,7 +122,7 @@ switch(action.type)
                            fans: '256',
                            photo:'https://images-na.ssl-images-amazon.com/images/I/61aaWA5eI8L.jpg' ,   
                            freeTextRequirement:'I need best possible coaching for subject and also to help me complete my assignments' 
-                        }])
+                        }]*/     )
                 }
 
 

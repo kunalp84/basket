@@ -40,6 +40,23 @@ class StudentProfileForm extends React.Component {
       super(props)
 
     }
+    componentDidMount() {
+      console.log('componentDidMount - Profile Screen')
+if(AuthenticationService.isUserLoggerIn()) { 
+
+    console.log("User is logged in fetching the profile information")
+      this.props.dispatch({
+        type:'LOAD_PROFILE',
+        profile:[] 
+    })
+
+  }
+    //window.addEventListener('scroll', this._loadMore, false);
+
+      //console.log(this.state)
+      console.log("end of did mount- Profile Screen")
+  }
+
 
     render() {
       return (       <div className="col-md-8 px-3" > 
@@ -126,7 +143,7 @@ Your Profile
         <td className='batchform'><label htmlFor="Name" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Name</label>
         </td>
         <td className='batchform'>
-        <Field name="name" component="input" type="text" className="col-sm-10" style={{width:'350px'}}/>
+        <Field name="name" component="input" type="text" className="col-sm-10" style={{width:'350px'}}  placeholder={this.props.profile.name}/>
         </td>
       </tr>
 
@@ -224,9 +241,40 @@ Your Profile
 
 
   StudentProfileForm = reduxForm({
-    form: 'studentprofileform' // a unique name for this form
+    form: 'studentprofileform',
+    enableReinitialize:true
+    // a unique name for this form
   })(StudentProfileForm);
   
+
+
+const mapStateToProps = (state,ownProps) => {
+  console.log("$$$ state  "+state)  
+  console.log(state)
+  console.log("OwnProps"+ownProps)
+    console.log("i222nside mapStateToProps - list of teacher enquiries" + state.registrationReducer.profile)
+
+    return {
+      initialValues:{
+        name:state.registrationReducer.profile.name,
+        emailId:state.registrationReducer.profile.emailId,
+        password:state.registrationReducer.profile.password,
+
+        mobile:state.registrationReducer.profile.mobile,
+
+        subject:state.registrationReducer.profile.subject,
+        category:state.registrationReducer.profile.category,
+        freeTextRequirement:state.registrationReducer.profile.freeTextRequirement
+
+
+
+
+      },
+         profile: state.registrationReducer.profile,
+         profileUpdateStatus:state.registrationReducer.profileUpdateStatus
+    }
+
+} 
   
   //export default AskForBatchForm
-  export default connect()(StudentProfileForm);
+  export default connect(mapStateToProps)(StudentProfileForm);

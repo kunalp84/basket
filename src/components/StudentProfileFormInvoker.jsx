@@ -2,6 +2,7 @@ import React from 'react'
 import AskForBatchForm from './AskForBatchForm';
 import {connect} from 'react-redux';
 import StudentProfileForm from './StudentProfileForm';
+import AuthenticationService from './services/AuthenticationService';
 
 class StudentProfileFormInvoker extends React.Component {
   submit = (event) => {
@@ -9,7 +10,32 @@ class StudentProfileFormInvoker extends React.Component {
 
     // print the form values to the console
     console.log("Student********"+event.target.subject.value)
-    const studentdata =[{
+    
+   // console.log("dispatching action to reducer"+studentdata[0].name+" "+studentdata[0].subject)
+    // give action to the reducer
+    
+    
+    if(AuthenticationService.isUserLoggerIn())
+    {
+      const studentdata =[{
+        name:event.target.name.value,
+        password:event.target.password.value,
+        emailId:AuthenticationService.getUser(),
+       category:event.target.category.value,
+       mobile:event.target.mobile.value,
+       subject:event.target.subject.value,
+        freeTextRequirement:event.target.freeTextRequirement.value
+    }]
+
+      this.props.dispatch({
+        type:'EDIT_PROFILE',
+        data:studentdata
+    })
+    console.log("This is Edit existing Student/Prof")
+
+    }
+    else {
+      const studentdata =[{
         name:event.target.name.value,
         password:event.target.password.value,
         emailId:event.target.emailId.value,
@@ -18,16 +44,15 @@ class StudentProfileFormInvoker extends React.Component {
        subject:event.target.subject.value,
         freeTextRequirement:event.target.freeTextRequirement.value
     }]
-    console.log("dispatching action to reducer"+studentdata[0].name+" "+studentdata[0].subject)
-    // give action to the reducer
+
     this.props.dispatch({
-        type:'ADD_STUDENT',
+        type:'ADD_PROFILE',
         data:studentdata
     })
-    console.log("dispatched - student")
+    console.log("This is add new Student/Prof")
     //make the form blank again
   //  event.target.subject.value=''
-    
+  }
 
 
   }

@@ -21,13 +21,13 @@ const theData =
     }
 
     const listOfCategories = [{
-      name:'Engineering'
+      name:'ENGINEERING'
     },
     {
-      name:'School levels 1-10'
+      name:'SCHOOL'
     },
     {
-       name:'Junior College levels 11 and 12' 
+       name:'JUNIOR_COLLEGE' 
     }]
 
 
@@ -77,9 +77,14 @@ class AskForBatchForm extends React.Component {
           <br>
           </br>
 
-
+          {this.props.responseMessage==="OK" && <span className="label label-pill label-success">Your request is registered with us.We will contact you shortly.</span>}
       
+      {this.props.responseMessage==="NOK" && <span className="label label-pill label-danger">Operation Failed. Please retry or contact your systen adminstrator</span>  }
 
+      <br>
+          </br>
+          <br>
+          </br>
            { /*<Form >
   
 
@@ -121,10 +126,10 @@ class AskForBatchForm extends React.Component {
 <form onSubmit={this.props.handleSubmit}>
   <table className='center'>
       <tr>
-        <td className='batchform'><label htmlFor="subject" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Subject</label>
+        <td className='batchform'><label htmlFor="subjectName" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Subject</label>
         </td>
         <td className='batchform'>
-        <Field name="subject" component="input" type="text" className="col-sm-10" style={{width:'350px'}}/>
+        <Field name="subjectName" component="input" type="text" className="col-sm-10" style={{width:'350px'}}/>
         </td>
       </tr>
 
@@ -137,10 +142,10 @@ class AskForBatchForm extends React.Component {
           </td>
       </tr>
       <tr>
-        <td className='batchform'> <label htmlFor="freeTextRequirement" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Free text Requirement</label>
+        <td className='batchform'> <label htmlFor="requirement" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Free text Requirement</label>
         </td>
         <td className='batchform'> 
-        <Field name="freeTextRequirement" component="textarea" className="col-sm-10" style={{width:'350px'}} />
+        <Field name="requirement" component="textarea" className="col-sm-10" style={{width:'350px'}} />
       </td>
       </tr>
       </table>
@@ -185,6 +190,8 @@ class AskForBatchForm extends React.Component {
     form: 'askforbatchform' // a unique name for this form
   })(AskForBatchForm);
   
+
+
   
   //export default AskForBatchForm
   export default connect()(AskForBatchForm);

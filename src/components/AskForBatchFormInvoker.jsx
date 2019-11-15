@@ -1,36 +1,58 @@
 import React from 'react'
 import AskForBatchForm from './AskForBatchForm';
 import {connect} from 'react-redux';
+import AuthenticationService from './services/AuthenticationService';
+import createAction from './actions/TeacherEnquiryAction';
 
 class AskForBatchFromInvoker extends React.Component {
   submit = (event) => {
     event.preventDefault();
 
     // print the form values to the console
-    console.log(event.target.subject.value)
+    console.log(event.target.subjectName.value)
     const teacherEnquiries =[{
-        subject:event.target.subject.value,
+        subjectName:event.target.subjectName.value,
        category:event.target.category.value,
-        freeTextRequirement:event.target.freeTextRequirement.value
+        requirement:event.target.requirement.value,
+        userName: AuthenticationService.getUser(),
+        respMessage:''
     }]
-    console.log("dispatching action to reducer"+teacherEnquiries[0].subject+" "+teacherEnquiries[0].category)
+    console.log("dispatching action to reducer"+teacherEnquiries[0].subjectName+" "+teacherEnquiries[0].category)
     // give action to the reducer
-    this.props.dispatch({
-        type:'ADD_ENQUIRY',
-        data:teacherEnquiries
-    })
-    console.log("dispaycjed")
+
+    createAction(this.props, teacherEnquiries);
+
+    console.log("Back from Action method ")
+
+   // this.props.dispatch({
+   //     type:'ADD_ENQUIRY',
+     //   data:teacherEnquiries
+    //})
+    console.log("Dispatched action using props.dispatch")
     //make the form blank again
-    event.target.subject.value=''
+    event.target.subjectName.value=''
+    event.target.requirement.value=''
     
-
-
   }
   render() {
-    return <AskForBatchForm handleSubmit={this.submit} />
+    return <>   
+    <AskForBatchForm handleSubmit={this.submit} responseMessage={this.props.responseMessage}/> 
+   
+   
+    </>
   }
 }
 
 //export default AskForBatchFromInvoker
+const mapStateToProps = (state,ownProps) => {
 
-export default connect()(AskForBatchFromInvoker);
+  console.log("$$$ state $$$$$$$$$ "+state)  
+  console.log(state)
+  console.log("OwnProps"+ownProps)
+
+    return {
+         responseMessage: state.teacherEnquiryReducer.responseMessage,
+    }
+
+} 
+export default connect(mapStateToProps)(AskForBatchFromInvoker);

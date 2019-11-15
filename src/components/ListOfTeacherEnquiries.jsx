@@ -3,6 +3,7 @@ import TeacherEnquiry from './TeacherEnquiry'
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ReduxLazyScroll from 'redux-lazy-scroll'
+import createActionTeacherEnquiryView from './actions/LoadTeacherEnquiryViewAction';
 
 
 class ListOfTeacherEnquiries extends Component
@@ -26,10 +27,14 @@ class ListOfTeacherEnquiries extends Component
     componentDidMount() {
       console.log('componentDidMount - Single Teacher')
 
-      this.props.dispatch({
+      /*this.props.dispatch({
         type:'LOAD_ENQUIRY',
         data:[] 
-    })
+    })*/
+    //createActionTeacherEnquiryView(this.props)
+    // *** create a LOAD_ENQUIRY action
+     //pass size= 10 and start=1 
+
     //window.addEventListener('scroll', this._loadMore, false);
 
       //console.log(this.state)
@@ -39,7 +44,14 @@ class ListOfTeacherEnquiries extends Component
    
   _loadMore() {
    console.log("Load More function called") 
-    this.props.dispatch(  {type:"LOAD_MORE" , data: this.props.pageToBeFetched} )
+   // this.props.dispatch(  {type:"LOAD_MORE" , data:{  pageToBeFetched:this.props.pageToBeFetched, start:this.props.start, size:this.props.size} } )
+  // if(this.props.start>0)
+   //{
+    createActionTeacherEnquiryView(this.props)
+    
+   //}
+    // *** create a LOAD_ENQUIRY action
+     //pass size= 10 and start=start+size
   }
     
     hasMoreElements(){
@@ -185,11 +197,11 @@ else if(this.state.pageNumber>1) {
          // isFetching={false}
          // errorMessage={"Error"}
           loadMore={this._loadMore}
-         hasMore={this.props.pageToBeFetched<100}
+        // hasMore={this.props.pageToBeFetched<this.props.}
          isParentScrollable={true}
         >
     {
-      this.props.teacherEnquiries.map(teacher => <TeacherEnquiry key={Math.random()} subjects={teacher.subjects}  freeTextRequirement={teacher.freeTextRequirement} ></TeacherEnquiry>)
+      this.props.teacherEnquiries.map(teacher => <TeacherEnquiry key={teacher.id} subjects={teacher.subjectName}  freeTextRequirement={teacher.requirement} category={teacher.category}></TeacherEnquiry>)
       //this.props.teacherEnquiries.map(teacher => <TeacherEnquiry key={Math.random()} subjects={teacher.subjects}  freeTextRequirement={teacher.freeTextRequirement} ></TeacherEnquiry>)
       /*    this.state.teachers.filter(teacherCandidate => teacherCandidate.subjects.includes(this.props.customFilter)).
          map(teacher => <TeacherComponent key={teacher.name} photo={teacher.photo} name={teacher.name} 
@@ -225,7 +237,9 @@ const mapStateToProps = (state,ownProps) => {
 
     return {
         teacherEnquiries: state.teacherEnquiryReducer.teacherEnquiries || [{subject:'', freeTextRequirement:'', id:''}],
-        pageToBeFetched: state.teacherEnquiryReducer.pageToBeFetched || 0
+        pageToBeFetched: state.teacherEnquiryReducer.pageToBeFetched || 0,
+        start: state.teacherEnquiryReducer.start || 0,
+        size: state.teacherEnquiryReducer.size || 0
     }
 
 } 
