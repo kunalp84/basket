@@ -12,10 +12,12 @@ const defaultState = {
     switch(action.type)
     {
         case 'CHECK_LOGIN':
-            console.log("Action dispatched "+action.data[0].userid)
-            if(action.data[0].userid==='foo' && action.data[0].password==='foo')
+       console.log("Action dispatched ")
+            console.log(action)
+    
+            if(action.data.output.data.message==="OK")
                 {
-                   AuthenticationService.registerSuccessfulLogin(action.data[0].userid)
+                   AuthenticationService.registerSuccessfulLogin(action.data.userid)
                 return {
                         ...state,
                         isLoginSuccess:true

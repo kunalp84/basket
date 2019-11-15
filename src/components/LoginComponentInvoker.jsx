@@ -5,7 +5,7 @@ import StudentProfileForm from './StudentProfileForm';
 import LoginComponent from './LoginComponent';
 import AuthenticationService from './services/AuthenticationService';
 import {Redirect} from 'react-router-dom';
-
+import createActionLogin from './actions/LoginAction'
 
 class LoginComponentInvoker extends React.Component {
   submit = (event) => {
@@ -19,10 +19,12 @@ class LoginComponentInvoker extends React.Component {
     }]
     console.log("dispatching action to reducer"+loginData[0].userid+" "+loginData[0].password)
     // give action to the reducer
-    this.props.dispatch({
-        type:'CHECK_LOGIN',
-        data:loginData
-    })
+  //  this.props.dispatch({
+    //    type:'CHECK_LOGIN',
+      //  data:loginData
+    //})
+
+    createActionLogin(this.props,loginData)
     console.log("dispatched - login reducer")
     //make the form blank again
   //  event.target.subject.value=''
