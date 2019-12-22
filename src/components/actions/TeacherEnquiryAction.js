@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AuthenticationService from '../services/AuthenticationService';
 
 //export default function create(values) 
 
@@ -12,7 +13,8 @@ const createAction = (props, values) => {
       // dispatch({type: CREATE_ORGANIZATION});
     axios.post(`http://localhost:8080/batchRequestController/submitBatchRequest`,  JSON.stringify(values[0])  ,  {
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+         authorization: AuthenticationService.getToken()
     }})
           .then((res) =>{
             console.log(res);

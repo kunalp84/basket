@@ -2,14 +2,11 @@
 
 
 const defaultState = {
-    teacherEnquiries: [{
-      /*  subjectName:'',
-        category:'',
-        requirement:'',
-        showPopup:false,
-        userName:'',
-        respMessage:''*/
-    }]
+    teacherEnquiries: [],
+    size:10,
+    start:0,
+    totalHits:0,
+    pageToBeFetched:0
   }
 
 
@@ -38,14 +35,17 @@ switch(action.type)
        responseMessage:responseMessage
    }; //state.concat([action.data])
 
-
+   case "RESET_ENQUIRY_LIST_PAGE":
+    return defaultState;
 
    case 'LOAD_ENQUIRY':
        console.log("&&&&&&&Inside the swtich case LOAD enquiriws TEACHER ENQUIRY LOAD ENQUIRY")
           return  {
                  //   ...state,
-                    teacherEnquiries:state.teacherEnquiries.concat(
-                        action.data
+                  
+                 
+             //    teacherEnquiries:state.teacherEnquiries.concat(
+              //        action.data.nextElements
                         /*[
                         {
                            name: 'Student.Yogesh',
@@ -91,11 +91,13 @@ switch(action.type)
                            freeTextRequirement:'I need best possible coaching for subject and also to help me complete my assignments'    
                          }
                          
-                ]*/),
+                ]*/ //),
+                teacherEnquiries:action.data.nextElements,
                 showPopup:false,
                 pageToBeFetched:0,
                 size:10,
-                start:10
+                start:10,
+                totalHits:action.data.totalRecords
 
             }
             case 'TOGGLE_POPUP':
@@ -112,8 +114,10 @@ switch(action.type)
                     pageToBeFetched:action.data.pageToBeFetched+1,
                     size:action.data.size,
                     start:Number(action.data.start)+Number(action.data.size),
+                    totalHits:action.data.totalRecords,
+
                     teacherEnquiries:state.teacherEnquiries.concat(
-                        action.data.nextElements
+                      action.data.nextElements
                         /*[
                         {
                            name: 'Student.Yogesh Thi one is more',
@@ -122,7 +126,8 @@ switch(action.type)
                            fans: '256',
                            photo:'https://images-na.ssl-images-amazon.com/images/I/61aaWA5eI8L.jpg' ,   
                            freeTextRequirement:'I need best possible coaching for subject and also to help me complete my assignments' 
-                        }]*/     )
+                        }]*/    )
+                      //  teacherEnquiries: action.data.nextElements
                 }
 
 

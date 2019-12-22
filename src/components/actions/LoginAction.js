@@ -16,10 +16,10 @@ const createActionLogin = (props,loginData) => {
             console.log(res);
             console.log("****** Back from Login check*****")
             console.log(res);
-              props.dispatch({type: 'CHECK_LOGIN', data:{output:res,userid:loginData[0].userid} });
+              props.dispatch({type: 'CHECK_LOGIN', data:{output:res,userid:loginData[0].userid, password:loginData[0].password} });
           })
           .catch((error)=> {
-              props.dispatch({type: 'CHECK_LOGIN', data: {output:error,userid:loginData[0].userid} });
+              props.dispatch({type: 'CHECK_LOGIN', data: {output:error,userid:loginData[0].userid,password:loginData[0].password} });
           })
    // }
   

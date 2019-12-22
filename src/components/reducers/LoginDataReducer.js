@@ -17,7 +17,7 @@ const defaultState = {
     
             if(action.data.output.data.message==="OK")
                 {
-                   AuthenticationService.registerSuccessfulLogin(action.data.userid)
+                   AuthenticationService.registerSuccessfulLogin(action.data.userid,action.data.password)
                 return {
                         ...state,
                         isLoginSuccess:true

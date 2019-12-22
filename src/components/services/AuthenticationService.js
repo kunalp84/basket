@@ -1,9 +1,10 @@
 class AuthenticationService {
 
 
-  registerSuccessfulLogin= (userName) =>{
+  registerSuccessfulLogin= (userName,password) =>{
         console.log("putting user in session storage")
         sessionStorage.setItem("userId",userName)
+        sessionStorage.setItem("userToken", window.btoa(userName + ":" + password) )
     }
 
     logout = ()=> {
@@ -24,6 +25,11 @@ class AuthenticationService {
     getUser()
     {
         return sessionStorage.getItem("userId")
+    }
+
+    getToken()
+    {
+        return 'Basic ' +sessionStorage.getItem("userToken")
     }
 
 }

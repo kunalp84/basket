@@ -24,6 +24,9 @@ class ListOfTeacherEnquiries extends Component
 
     }
 
+
+  
+  
     componentDidMount() {
       console.log('componentDidMount - Single Teacher')
 
@@ -47,8 +50,17 @@ class ListOfTeacherEnquiries extends Component
    // this.props.dispatch(  {type:"LOAD_MORE" , data:{  pageToBeFetched:this.props.pageToBeFetched, start:this.props.start, size:this.props.size} } )
   // if(this.props.start>0)
    //{
+    //if(this.props.size+ start+1 <)
+    console.log(this.props.start)
+    console.log(this.props.totalHits)
+
+    
     createActionTeacherEnquiryView(this.props)
     
+   // else
+    //{
+   //   console.log("Further scrolling not possible *******")
+  //  }
    //}
     // *** create a LOAD_ENQUIRY action
      //pass size= 10 and start=start+size
@@ -189,6 +201,9 @@ else if(this.state.pageNumber>1) {
  render() {
         console.log('Filter from Example auto suggest'+this.props.customFilter)
 
+        //this.props.dispatch({type: 'RESET_ENQUIRY_LIST_PAGE', data:[]});
+
+
     return (
       <div style={{height:'900px', overflow:'auto'}} >
 
@@ -197,7 +212,7 @@ else if(this.state.pageNumber>1) {
          // isFetching={false}
          // errorMessage={"Error"}
           loadMore={this._loadMore}
-        // hasMore={this.props.pageToBeFetched<this.props.}
+         hasMore={Number(this.props.start) <= Number(this.props.totalHits)}
          isParentScrollable={true}
         >
     {
@@ -239,7 +254,8 @@ const mapStateToProps = (state,ownProps) => {
         teacherEnquiries: state.teacherEnquiryReducer.teacherEnquiries || [{subject:'', freeTextRequirement:'', id:''}],
         pageToBeFetched: state.teacherEnquiryReducer.pageToBeFetched || 0,
         start: state.teacherEnquiryReducer.start || 0,
-        size: state.teacherEnquiryReducer.size || 0
+        size: state.teacherEnquiryReducer.size || 0,
+        totalHits:state.teacherEnquiryReducer.totalHits || 0
     }
 
 } 

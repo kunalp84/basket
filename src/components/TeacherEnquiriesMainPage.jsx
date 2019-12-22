@@ -2,6 +2,8 @@ import Autosuggest from 'react-autosuggest';
 import React, { Component } from 'react';
 import ListOfTeacherEnquiries from './ListOfTeacherEnquiries'
 import theme from '../theme.css'
+import {connect} from 'react-redux';
+
 
 
 // Imagine you have a list of languages that you'd like to autosuggest.
@@ -59,11 +61,18 @@ class TeacherEnquiriesMainPage extends React.Component {
   }
 
   onChange = (event, { newValue }) => {
- 
+
+    setTimeout(() => {
+     // this.props.getSearchForItems(newValue);
+     console.log("Dummy timeout for typing speed of users")
+    }, 300);
+    
     this.setState({
       value: newValue
     }); 
-  
+
+    console.log("New state is set")
+    
   };
 
   // Autosuggest will call this function every time you need to update suggestions.
@@ -85,8 +94,9 @@ class TeacherEnquiriesMainPage extends React.Component {
 
   render() {
     const { value, suggestions } = this.state;
-
     // Autosuggest will pass through all these props to the input.
+    this.props.dispatch({type: 'RESET_ENQUIRY_LIST_PAGE', data:[]});
+
     const inputProps = {
       placeholder: 'Type atleast 3 characters of a  Course or a Subject Name',
       value,
@@ -121,4 +131,5 @@ class TeacherEnquiriesMainPage extends React.Component {
   }
 }
 
-export default TeacherEnquiriesMainPage
+//export default TeacherEnquiriesMainPage
+export default connect()(TeacherEnquiriesMainPage);
