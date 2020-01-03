@@ -4,6 +4,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import PropTypes from 'prop-types';
 import ReduxLazyScroll from 'redux-lazy-scroll'
 import {connect} from 'react-redux';
+import createActionTeacherListView from './actions/LoadTeacherListViewAction';
+
 
 
 class ListOfTeachersComponent extends Component
@@ -11,20 +13,8 @@ class ListOfTeachersComponent extends Component
     constructor(props)
     {
         super(props)
-        this.state = {
-            teachers: [],
-            message: null,
-            noOfElements:0,
-            //hasMore:true,
-            pageNumber:1,
-            totalPages:5,
-            totalRecords:50,
-            teacherComponentArray:[]
-           
-           
-           
+        console.log("inside constructor listOFTeachers" + this.state)
 
-        }
 
         this.refreshTeacherData = this.refreshTeacherData.bind(this)
         this.componentDidMount = this.componentDidMount.bind(this)
@@ -33,12 +23,12 @@ class ListOfTeachersComponent extends Component
     }
 
     componentDidMount() {
-        console.log('componentDidMount - Single Teacher')
-  
+        console.log('componentDidMount - for List of Teachers ')
+  /*
         this.props.dispatch({
           type:'LOAD_TEACHERS',
           data:[] 
-      })
+      })*/
       //window.addEventListener('scroll', this._loadMore, false);
   
         //console.log(this.state)
@@ -48,7 +38,8 @@ class ListOfTeachersComponent extends Component
      
     _loadMore() {
      console.log("Load More function called") 
-      this.props.dispatch(  {type:"LOAD_MORE_TEACHERS" , data: this.props.teacherPageToBeFetched} )
+     // this.props.dispatch(  {type:"LOAD_MORE_TEACHERS" , data: this.props.teacherPageToBeFetched} )
+     createActionTeacherListView(this.props)
     }
    
 
@@ -62,7 +53,7 @@ class ListOfTeachersComponent extends Component
         return false;
     }
 
-
+/** This methd is no more used */
     refreshTeacherData() {
     //    let username = AuthenticationService.getLoggedInUserName()
        // TodoDataService.retrieveAllTodos(username)
@@ -112,16 +103,16 @@ if(this.state.pageNumber===1) {
                     photo:'https://images-na.ssl-images-amazon.com/images/I/61aaWA5eI8L.jpg'     
                  }
         ]
-        this.setState({teachers:theData}, () => {console.log(this.state.teachers)})
+      //  this.setState({teachers:theData}, () => {console.log(this.state.teachers)})
 
-        this.setState({teacherComponentArray: theData.map(teacher => <TeacherComponent key={Math.random()} photo={teacher.photo} name={teacher.name} subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} ></TeacherComponent>)
-    })
+       // this.setState({teacherComponentArray: theData.map(teacher => <TeacherComponent key={Math.random()} photo={teacher.photo} name={teacher.name} subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} ></TeacherComponent>)
+    //})
 
 
 console.log('*****1  '+this.state.pageNumber)
-        this.setState((prevState) => ({
-            pageNumber: prevState.pageNumber + 1
-        }));
+     //   this.setState((prevState) => ({
+ //           pageNumber: prevState.pageNumber + 1
+  //      }));
 
 console.log('*****2   '+this.state.pageNumber)
 
@@ -141,12 +132,12 @@ else if(this.state.pageNumber>1) {
            photo:'https://images-na.ssl-images-amazon.com/images/I/61aaWA5eI8L.jpg'     
         }]
     
-        this.setState({teacherComponentArray: this.state.teacherComponentArray.concat (
+      /*  this.setState({teacherComponentArray: this.state.teacherComponentArray.concat (
             newArray.//filter(teacherCandidate => teacherCandidate.subjects.includes(this.props.customFilter)).
             map(teacher => <TeacherComponent key={teacher.name} photo={teacher.photo} name={teacher.name} 
                subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} >
                   </TeacherComponent>)
-        )})
+        )})*/
     
     
         
@@ -156,9 +147,9 @@ else if(this.state.pageNumber>1) {
  console.log("Refresh data called -pre inc"+this.state.pageNumber)
 
        // this.setState({noOfElements:5})  
-        this.setState((prevState) => ({
+     /*   this.setState((prevState) => ({
             pageNumber: prevState.pageNumber + 1
-        }));
+        }));*/
     
         console.log("Refresh data called -out "+this.state.pageNumber)
 
@@ -175,13 +166,24 @@ else if(this.state.pageNumber>1) {
          // isFetching={false}
          // errorMessage={"Error"}
           loadMore={this._loadMore}
-         hasMore={this.props.teacherPageToBeFetched<100}
-         isParentScrollable={true}
+          hasMore={Number(this.props.start) <= Number(this.props.totalHits)}
+                   isParentScrollable={true}
         >
     
     {
 //        this.state.teacherComponentArray
-        this.props.teacherList.map(teacher => <TeacherComponent key={Math.random()} photo={teacher.photo} name={teacher.name} subjects={teacher.subjects} fans={teacher.fans} category={teacher.category} ></TeacherComponent>)
+        this.props.teacherList.map(teacher => <TeacherComponent key={teacher.name} 
+            name={teacher.name}
+            institute ={teacher.institute}
+              location={teacher.location}
+              industrialExperience={teacher.industrialExperience}
+              teachingExperience={teacher.teachingExperience}
+            /*photo={teacher.photo}*/ name={teacher.name} 
+            subjects={teacher.subject} 
+            emailId={teacher.emailId} 
+            category={teacher.category} 
+            mobile={teacher.mobile} 
+            freeTextRequirement={teacher.freeTextRequirement}></TeacherComponent>)
 
 
         /*    this.state.teachers.filter(teacherCandidate => teacherCandidate.subjects.includes(this.props.customFilter)).
@@ -208,11 +210,14 @@ const mapStateToProps = (state,ownProps) => {
     console.log("$$$ state  "+state)  
     console.log(state)
     console.log("OwnProps"+ownProps)
-      console.log("i222nside mapStateToProps - list of teacher components" + state.teacherListReducer.teacherList)
+      console.log("Inside for TeacherListView mapStateToProps - list of teacher components" + state.teacherListReducer.teacherList)
   
       return {
           teacherList: state.teacherListReducer.teacherList || [{subject:'', freeTextRequirement:'', id:''}],
-          teacherPageToBeFetched: state.teacherListReducer.teacherPageToBeFetched || 0
+          pageToBeFetched: state.teacherListReducer.teacherPageToBeFetched || 0,
+          start: state.teacherListReducer.start || 0,
+         size: state.teacherListReducer.size || 0,
+        totalHits:state.teacherListReducer.totalHits || 0
       }
   
   } 

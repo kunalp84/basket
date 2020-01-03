@@ -8,7 +8,7 @@ import ReactTable from 'react-table'
 import { Field, reduxForm } from 'redux-form'
 import AuthenticationService from './services/AuthenticationService';
 
-
+import createAction from './actions/ProfileAction';
 
 
 // Example Data
@@ -22,13 +22,21 @@ const theData =
     }
 
     const listOfCategories = [{
-      name:'Engineering'
+      name:'SCHOOL'
     },
     {
-      name:'School levels 1-10'
+      name:'ENGINEERING'
     },
     {
-       name:'Junior College levels 11 and 12' 
+       name:'JUNIOR COLLEGE' 
+    }]
+
+
+    const userTypes = [{
+      name:'STUDENT'
+    },
+    {
+      name:'TEACHER'
     }]
 
 
@@ -45,10 +53,13 @@ class StudentProfileForm extends React.Component {
 if(AuthenticationService.isUserLoggerIn()) { 
 
     console.log("User is logged in fetching the profile information")
-      this.props.dispatch({
+     
+    //
+    createAction(this.props,AuthenticationService.getUser(),"JUST_GET_INFO")
+   /*this.props.dispatch({
         type:'LOAD_PROFILE',
-        profile:[] 
-    })
+        data:AuthenticationService.getUser()
+    })*/
 
   }
     //window.addEventListener('scroll', this._loadMore, false);
@@ -165,6 +176,14 @@ Your Profile
       </tr>
 
       <tr>
+        <td className='batchform'><label htmlFor="Password" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Confirm your password</label>
+        </td>
+        <td className='batchform'>
+        <Field name="confirmpassword" component="input" type="password" className="col-sm-10" style={{width:'350px'}}/>
+        </td>
+      </tr>
+
+      <tr>
         <td className='batchform'><label htmlFor="Mobile Number" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Mobile Number</label>
         </td>
         <td className='batchform'>
@@ -184,6 +203,15 @@ Your Profile
           </td>
       </tr>
 
+
+      <tr>
+       <td className='batchform'> <label htmlFor="category" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>I am a </label>
+        </td>
+         <td className='batchform'> <Field name="userType" component="select" className="col-sm-10" style={{width:'350px'}}>
+         { userTypes.map(userType => <option>{userType.name}</option> ) }
+          </Field>
+          </td>
+      </tr>
       <tr>
        <td className='batchform'> <label htmlFor="interestedSubjects" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Interested Subjects</label>
         </td>
@@ -201,6 +229,42 @@ Your Profile
         <Field name="freeTextRequirement" component="textarea" className="col-sm-10" style={{width:'350px'}} />
       </td>
       </tr>
+
+      <tr>
+        <td className='batchform'> <label htmlFor="Tell us more about you" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Teaching Experience</label>
+        </td>
+        <td className='batchform'> 
+        <Field name="teachingExperience" component="textarea" className="col-sm-10" style={{width:'350px'}} />
+      </td>
+      </tr>
+
+
+      <tr>
+        <td className='batchform'> <label htmlFor="Tell us more about you" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Industrial Experience</label>
+        </td>
+        <td className='batchform'> 
+        <Field name="industrialExperience" component="textarea" className="col-sm-10" style={{width:'350px'}} />
+      </td>
+      </tr>
+
+
+      <tr>
+        <td className='batchform'> <label htmlFor="Tell us more about you" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Institute</label>
+        </td>
+        <td className='batchform'> 
+        <Field name="institute" component="textarea" className="col-sm-10" style={{width:'350px'}} />
+      </td>
+      </tr>
+
+
+      <tr>
+        <td className='batchform'> <label htmlFor="Tell us more about you" className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Location</label>
+        </td>
+        <td className='batchform'> 
+        <Field name="location" component="textarea" className="col-sm-10" style={{width:'350px'}} />
+      </td>
+      </tr>
+
       </tbody>
       </table>
 
@@ -259,14 +323,17 @@ const mapStateToProps = (state,ownProps) => {
         name:state.registrationReducer.profile.name,
         emailId:state.registrationReducer.profile.emailId,
         password:state.registrationReducer.profile.password,
-
+        confirmpassword:state.registrationReducer.profile.confirmpassword,
         mobile:state.registrationReducer.profile.mobile,
+        userType:state.registrationReducer.profile.userType,
 
         subject:state.registrationReducer.profile.subject,
         category:state.registrationReducer.profile.category,
-        freeTextRequirement:state.registrationReducer.profile.freeTextRequirement
+        freeTextRequirement:state.registrationReducer.profile.freeTextRequirement,
 
-
+        location:state.registrationReducer.profile.location,  
+         teachingExperience:state.registrationReducer.profile.teachingExperience,
+         industrialExperience:state.registrationReducer.profile.industrialExperience,
 
 
       },

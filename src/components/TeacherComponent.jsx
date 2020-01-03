@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import TeacherProfilePopUp from './TeacherProfilePopUp'
 import Popup from "reactjs-popup";
+import {connect} from 'react-redux';
 
 
 
@@ -37,8 +38,8 @@ class TeacherComponent extends Component
 
     componentDidMount() {
         console.log('componentDidMount - Single Teacher')
-        this.refreshSingleTeacher(); /** Get the data from props and put it in a state*/
-        console.log(this.state)
+      //  this.refreshSingleTeacher(); /** Get the data from props and put it in a state*/
+        console.log(this.props)
     }
 
     refreshSingleTeacher()
@@ -75,6 +76,17 @@ class TeacherComponent extends Component
               {this.state.showPopup ? 
             <TeacherProfilePopUp
               text='Teacher Profile'
+              name={this.props.name}
+              email={this.props.emailId}
+              subject={this.props.subjects}
+              freeTextRequirement={this.props.freeTextRequirement}
+              mobile={this.props.mobile}
+              institute ={this.props.institute}
+              location={this.props.location}
+              industrialExperience={this.props.industrialExperience}
+              teachingExperience={this.props.teachingExperience}
+              category={this.props.category}
+              mode ="BY_OTHER"
               closePopup={this.togglePopup.bind(this)} 
              
             />
@@ -104,4 +116,14 @@ class TeacherComponent extends Component
   }
 }
 
-export default TeacherComponent
+const mapStateToProps = (state) => {
+  console.log("inside mapStateToProps of enquiry state.teacherListReducer.showPopup" + state.showPopup)
+
+  return {
+    showPopup: state.teacherListReducer.showPopup || false 
+  }
+
+  }
+    export default connect(mapStateToProps)(TeacherComponent);
+
+

@@ -172,6 +172,9 @@ componentWillMount() {
                 <NavLink href="/StudentProfile/">Edit My Profile</NavLink>
               </NavItem>
               <NavItem>
+                <NavLink href="/NewUserRegistration/">New Users Registration</NavLink>
+              </NavItem>
+              <NavItem>
                 <NavLink href="/LookUpRecordedCourses/">Recorded Courses</NavLink>
               </NavItem>
              
@@ -195,7 +198,7 @@ componentWillMount() {
                 <Route  path="/LookUpRecordedCourses" component={RecordedCoursesMainPage}  />
                 <AuthenticatedRoute path="/AskForBatchForm" component={AskForBatchFromInvoker} />
                 <AuthenticatedRoute path="/StudentProfile" component={StudentProfileFormInvoker}/>
-                <Route path="/StudentProfileRegistration" component={StudentProfileFormInvoker}/>
+                <Route path="/NewUserRegistration" component={StudentProfileFormInvoker}/>
 
                 <Route path="/Login" component={LoginComponentInvoker}/>
                 <Route  component={ErrorComponent}  />

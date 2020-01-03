@@ -1,7 +1,11 @@
 
 
 const defaultState = {
-    teacherList: []
+    teacherList: [],
+    size:10,
+    start:0,
+    totalHits:0,
+    pageToBeFetched:0
   }
 
 
@@ -15,7 +19,7 @@ switch(action.type)
    case 'LOAD_TEACHERS':
        console.log("&&&&&&&Inside the swtich case LOAD TEACHERS TEACHER LIST - LOAD_TEACHERS")
           return  {
-                    ...state,
+                 /*   ...state,
                     teacherList:state.teacherList.concat([
                         {
                             name: 'Prof.Pankaj',
@@ -53,7 +57,13 @@ switch(action.type)
                              photo:'https://images-na.ssl-images-amazon.com/images/I/61aaWA5eI8L.jpg'     
                           }
                          
-                ]),
+                ]),*/
+                teacherList:action.data.nextElements,
+                showPopup:false,
+                pageToBeFetched:0,
+                size:10,
+                start:10,
+                totalHits:action.data.totalRecords,
                 showPopup:false,
                 teacherPageToBeFetched:0
 
@@ -64,19 +74,32 @@ switch(action.type)
                        showPopup:action.data
 
                 }
+
+             case 'RESET_TEACHER_LIST_PAGE':
+                 return defaultState;
+                   
+             
             case 'LOAD_MORE_TEACHERS':
                 console.log(" TeacherListReducer LOAD_MORE_TEACHERS you are scrolling......"+action.data)
                 return {
                     ...state,
-                    teacherPageToBeFetched:action.data+1,
-                    teacherList:state.teacherList.concat([
-                        {
+                    pageToBeFetched:action.data.pageToBeFetched+1,
+                    size:action.data.size,
+                    start:Number(action.data.start)+Number(action.data.size),
+                    totalHits:action.data.totalRecords,
+                    showPopup:false,
+
+                    teacherList:state.teacherList.concat(
+                        action.data.nextElements
+
+                        /*[
+                     {
                            name: 'Student.Yogesh Thi one is more$$$$$',
                            subjects: 'Microprocessor 8086 - more pipeline',
                            category: 'Engineering',
                            fans: '256',
                            photo:'https://images-na.ssl-images-amazon.com/images/I/61aaWA5eI8L.jpg' 
-                        }])
+                        }    ]   */   )
                 }
 
 

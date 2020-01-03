@@ -23,7 +23,7 @@ const createAction = (props, values) => {
               props.dispatch({type: 'ADD_ENQUIRY_FOR_BATCH', data:res});
           })
           .catch((error)=> {
-              props.dispatch({type: 'ADD_ENQUIRY_FOR_BATCH', data: error});
+              props.dispatch({type: 'FAIL_ADD_ENQUIRY_FOR_BATCH', data: error});
           })
    // }
   

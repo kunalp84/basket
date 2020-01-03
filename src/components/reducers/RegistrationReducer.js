@@ -1,7 +1,7 @@
 
 
 const defaultState = {
-    profile: []
+    profile: {}
   }
 
 
@@ -11,21 +11,31 @@ console.log(state.profile)
 console.log(action.data)
 switch(action.type)
 {
-    
-   case 'LOAD_PROFILE':
+    //was LOAD_PROFILE
+   case 'SUCCESS_GET_USER_PROFILE_DATA':
        console.log("&&&&&&&Loading existing profile")
        console.log(action.data)
           return  {
                     ...state,
                     profileUpdateStatus: true,
                     profile: {
-                    name:"test",
-                    password:"event.target.password.value",
-                    emailId:"event.target.emailId.value",
-                   category:"event.target.category.value",
-                   mobile:"event.target.mobile.value",
-                   subject:"event.target.subject.value",
-                    freeTextRequirement:"event.target.freeTextRequirement.value"
+                    name:action.data.data.items.name,
+                    password:action.data.data.items.password,
+                    emailId:action.data.data.items.emailId,
+                   category:action.data.data.items.category,
+                   mobile:action.data.data.items.mobile,
+                   subject:action.data.data.items.subject,
+                    freeTextRequirement:action.data.data.items.freeTextRequirement,
+                    userType:action.data.data.items.userType,
+                    confirmpassword:action.data.data.items.confirmpassword,
+                    location:action.data.data.items.location,
+                    
+                    teachingExperience:action.data.data.items.teachingExperience,
+                    industrialExperience:action.data.data.items.industrialExperience,
+                   // location:action.data.items.location,
+                    
+
+
                 }
                           
             }

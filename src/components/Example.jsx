@@ -2,6 +2,7 @@ import Autosuggest from 'react-autosuggest';
 import React, { Component } from 'react';
 import ListOfTeachersComponent from './ListOfTeachersComponent'
 import theme from '../theme.css'
+import {connect} from 'react-redux';
 
 
 // Imagine you have a list of languages that you'd like to autosuggest.
@@ -67,9 +68,11 @@ class Example extends React.Component {
   // Autosuggest will call this function every time you need to update suggestions.
   // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested = ({ value }) => {
+    if(value.length>3) {
     this.setState({
       suggestions: getSuggestions(value)
     });
+  }
   };
 
   // Autosuggest will call this function every time you need to clear suggestions.
@@ -81,6 +84,7 @@ class Example extends React.Component {
 
   render() {
     const { value, suggestions } = this.state;
+    this.props.dispatch({type: 'RESET_TEACHER_LIST_PAGE', data:[]});
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
@@ -116,5 +120,4 @@ class Example extends React.Component {
     );
   }
 }
-
-export default Example
+export default connect()(Example);

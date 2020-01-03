@@ -35,6 +35,25 @@ switch(action.type)
        responseMessage:responseMessage
    }; //state.concat([action.data])
 
+
+   case 'FAIL_ADD_ENQUIRY_FOR_BATCH':
+    //  console.log("Action dispatched "+action.data[0].category)
+      var responseMessage="NATTTT"
+     // console.log("JSON message  "+JSON.stringify(action.data[0]))
+     // const dataSent={ batchrequest:JSON.stringify(action.data[0]) };
+       
+       
+
+
+      
+      responseMessage = "NOK"
+      console.log("HERE ######################"+responseMessage)
+  return {
+     ...state,
+//     teacherEnquiries:state.teacherEnquiries.concat([action.data]),
+     responseMessage:responseMessage
+ }; //state.concat([action.data])
+
    case "RESET_ENQUIRY_LIST_PAGE":
     return defaultState;
 

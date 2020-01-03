@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form'
 import AuthenticationService from './services/AuthenticationService';
 
 import {Redirect} from 'react-router-dom';
-
+import {connect} from 'react-redux';
 
 
 // Example Data
@@ -66,9 +66,8 @@ class TeacherProfilePopUp extends React.Component {
             <img src={theData.photo}  className="w-100" style={{ width: '120px' , height:'130px' ,verticalAlign:'center',border: '3px solid green' }} />
           </div>
           <div className="col-md-4" style={{verticalAlign:'center'}}>
-          Dear Students, I am prof. {theData.name}} and I have 13 years of teaching experience in the field of 
-          Computer Science and Engineering. My expertise are AT, DB and PC
-          I am a PhD and I am always recogonized by my students.
+          Dear Students, I am prof. {this.props.name} 
+           {this.props.freeTextRequirement}
 
 </div>
 
@@ -102,46 +101,46 @@ class TeacherProfilePopUp extends React.Component {
     
   <Form.Group controlId="fullName" className="form-group row">
     <Form.Label className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Full Name</Form.Label>
-    <Form.Control type="email" placeholder={theData.name}  readOnly className="col-sm-10" style={{width:'350px'}}/>
+    <Form.Control type="text" placeholder={this.props.name}  readOnly className="col-sm-10" style={{width:'350px'}}/>
   </Form.Group>
   <Form.Group controlId="subjects" className="form-group row">
     <Form.Label className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Subjects</Form.Label>
-    <Form.Control type="email" placeholder={theData.subjects}  readOnly className="col-sm-10" style={{width:'350px'}}/>
+    <Form.Control type="text" placeholder={this.props.subject}  readOnly className="col-sm-10" style={{width:'350px'}}/>
   </Form.Group>
 
   <Form.Group controlId="category" className="form-group row">
     <Form.Label className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Category</Form.Label>
-    <Form.Control type="email" placeholder={theData.category}  readOnly className="col-sm-10" style={{width:'350px'}}/>
+    <Form.Control type="text" placeholder={this.props.category}  readOnly className="col-sm-10" style={{width:'350px'}}/>
   </Form.Group>
 
-  <Form.Group controlId="TeachingExperience" className="form-group row">
+  <Form.Group controlId="teachingExperience" className="form-group row">
     <Form.Label className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>TeachingExperience</Form.Label>
-    <Form.Control type="email" placeholder={theData.TeachingExperience}  readOnly className="col-sm-10" style={{width:'350px'}}/>
+    <Form.Control type="text" placeholder={this.props.teachingExperience}  readOnly className="col-sm-10" style={{width:'350px'}}/>
   </Form.Group>
 
-  <Form.Group controlId="IndustrialExperience" className="form-group row">
+  <Form.Group controlId="industrialExperience" className="form-group row">
     <Form.Label className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>IndustrialExperience</Form.Label>
-    <Form.Control type="email" placeholder={theData.IndustrialExperience}  readOnly className="col-sm-10" style={{width:'350px'}}/>
+    <Form.Control type="text" placeholder={this.props.industrialExperience}  readOnly className="col-sm-10" style={{width:'350px'}}/>
   </Form.Group>
 
-  <Form.Group controlId="Institute" className="form-group row">
+  <Form.Group controlId="institute" className="form-group row">
     <Form.Label className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>Institute</Form.Label>
-    <Form.Control type="email" placeholder={theData.Institute}  readOnly className="col-sm-10" style={{width:'350px'}}/>
+    <Form.Control type="text" placeholder={this.props.institute}  readOnly className="col-sm-10" style={{width:'350px'}}/>
   </Form.Group>
 
-  <Form.Group controlId="PrimaryLocation" className="form-group row">
+  <Form.Group controlId="location" className="form-group row">
     <Form.Label className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>PrimaryLocation</Form.Label>
-    <Form.Control type="email" placeholder={theData.PrimaryLocation}  readOnly className="col-sm-10" style={{width:'350px'}}/>
+    <Form.Control type="text" placeholder={this.props.location}  readOnly className="col-sm-10" style={{width:'350px'}}/>
   </Form.Group>
 
 
-  <Form.Group controlId="ContactNumber" className="form-group row">
+  <Form.Group controlId="mobile" className="form-group row">
     <Form.Label className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>ContactNumber</Form.Label>
-    <Form.Control type="email" placeholder={theData.ContactNumber}  readOnly className="col-sm-10" style={{width:'350px'}}/>
+    <Form.Control type="text" placeholder={this.props.mobile}  readOnly className="col-sm-10" style={{width:'350px'}}/>
   </Form.Group>
-  <Form.Group controlId="EmailAddress" className="form-group row">
+  <Form.Group controlId="email" className="form-group row">
     <Form.Label className="col-sm-2 col-form-label col-sm-offset-1" style={{width:'180px'}}>EmailAddress</Form.Label>
-    <Form.Control type="email" placeholder={theData.EmailAddress}  readOnly className="col-sm-10" style={{width:'350px'}}/>
+    <Form.Control type="text" placeholder={this.props.email}  readOnly className="col-sm-10" style={{width:'350px'}}/>
   </Form.Group>
 
   
@@ -178,4 +177,4 @@ class TeacherProfilePopUp extends React.Component {
     }
   }
 
-  export default TeacherProfilePopUp
+  export default connect()(TeacherProfilePopUp);
